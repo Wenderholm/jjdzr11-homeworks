@@ -1,5 +1,7 @@
 package pl.isa.homeworks.zadanie1;
 
+import java.util.Scanner;
+
 public class GuessNumberGame {
 
     private static final int MIN_VALUE = 0;
@@ -20,6 +22,8 @@ public class GuessNumberGame {
                                 - przedziału liczb;
                                 - ilość możliwości zgadywnia; 
                         Wybierz rodzaj rozgrywki i ciesz się zabawą ;)
+                        
+                        Wybierz tryb gry wpisujac: STANDARD lub PLAYER
                         """;
     }
 
@@ -39,27 +43,27 @@ public class GuessNumberGame {
         return "Podaj liczbę z przedziału " + min + " - " + max;
     }
 
-    public String guessNumber(int number) {
-        if (number > numberToGuess) {
-            return "Szukana liczba jest mniejsza niż :" + number;
+    public String guessNumber(int selectedNumber) {
+        if (selectedNumber > numberToGuess) {
+            return "Szukana liczba jest mniejsza niż :" + selectedNumber;
         }
-        if (number < numberToGuess) {
-            return "Szukana liczba jest większa niż :" + number;
+        if (selectedNumber < numberToGuess) {
+            return "Szukana liczba jest większa niż :" + selectedNumber;
         }
         hasWon = true;
         return "WYGRAŁEŚ";
     }
 
 
-    public String guessPlayerNumber(int number, int numberOfChances) {
+    public String guessPlayerNumber(int selectedNumber, int numberOfChances) {
         if (numberOfChances > 0) {
-            if (number > playerNumberGuess) {
-                return "Szukana liczba jest mniejsza niż :" + number;
+            if (selectedNumber > playerNumberGuess) {
+                return "Szukana liczba jest mniejsza niż :" + selectedNumber;
             }
-            if (number < playerNumberGuess) {
-                return "Szukana liczba jest większa niż :" + number;
+            if (selectedNumber < playerNumberGuess) {
+                return "Szukana liczba jest większa niż :" + selectedNumber;
             }
-            if (number == playerNumberGuess) {
+            if (selectedNumber == playerNumberGuess) {
                 hasWon = true;
                 return "WYGRAŁES";
             }
@@ -70,5 +74,45 @@ public class GuessNumberGame {
 
     public void playerNumberToGuess(int min, int max) {
         playerNumberGuess = (int) (min + (Math.random() * (max - min + 1)));
+    }
+
+    static void playerModeGame(GuessNumberGame game, Scanner input) {
+        System.out.println("podaj pirwsza liczbę zakresu");
+        int min = checkCorrectInput(input);
+
+        System.out.println("podaj drugą liczbę zakresu");
+        int max = checkCorrectInput(input);
+        if(max < min){
+            System.out.println("podaj druga liczbę większą niż pierwsza");
+            max = checkCorrectInput(input);
+        }
+        game.playerNumberToGuess(min, max);
+
+        System.out.println("ile chcesz mieć szans na odgadnięcie");
+        int numberOfChances = input.nextInt();
+
+        while (game.isRunning()) {
+            System.out.println(game.getPlayerInstruction(min, max));
+            System.out.println("Masz " +  numberOfChances + " szans");
+            int selectedNumber = checkCorrectInput(input);
+            if(selectedNumber >= min && selectedNumber <=max){
+                numberOfChances--;
+                System.out.println(game.guessPlayerNumber(selectedNumber, numberOfChances));
+            }else {
+                System.out.println("liczba z poza zakresu");
+            }
+        }
+    }
+
+    static int checkCorrectInput(Scanner input) {
+        int number;
+        do {
+            while (!input.hasNextInt()) {
+                System.out.println("To nie jest liczba");
+                input.next();
+            }
+            number = input.nextInt();
+        } while (number <= 0);
+        return number;
     }
 }
