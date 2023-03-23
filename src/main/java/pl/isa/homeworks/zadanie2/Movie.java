@@ -13,6 +13,6 @@ public class Movie extends CulturalPiece{
 
     @Override
     public String getCreatedBy() {
-        return "Created by: " + author;
+        return "Created by:  " + author;
     }
 }

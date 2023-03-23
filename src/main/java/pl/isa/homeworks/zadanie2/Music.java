@@ -12,6 +12,6 @@ public class Music extends CulturalPiece{
 
     @Override
     public String getCreatedBy() {
-        return "Composed by: " + author;
+        return "Composed by:  " + author;
     }
 }
