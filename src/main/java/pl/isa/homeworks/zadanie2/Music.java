@@ -10,8 +10,8 @@ public class Music extends CulturalPiece{
         return new String[]{"Listening"};
     }
 
-    public String getCreatedBy(){
+    @Override
+    public String getCreatedBy() {
         return "Composed by: " + author;
     }
-
 }

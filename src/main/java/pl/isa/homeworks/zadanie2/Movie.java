@@ -11,7 +11,8 @@ public class Movie extends CulturalPiece{
         return new String[]{"listening", "watching"};
     }
 
-    public String getCreatedBy(){
-        return "Ceated by: " + author;
+    @Override
+    public String getCreatedBy() {
+        return "Created by: " + author;
     }
 }
