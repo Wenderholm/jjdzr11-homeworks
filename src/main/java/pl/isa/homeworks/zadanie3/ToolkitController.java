@@ -41,6 +41,13 @@ public class ToolkitController {
     }
 
     private boolean saveToolkit() {
-        return false;
+        ObjectMapper mapper = new ObjectMapper();
+        List<Tool> toolsList = getTools();
+        try {
+            mapper.writeValue(pathToFile.toFile(), toolsList);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }
