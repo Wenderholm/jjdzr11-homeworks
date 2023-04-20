@@ -14,14 +14,17 @@ public class ToolkitApp {
 
         boolean isRunning = true;
         while (isRunning) {
-            showOptions();
-            int selectedOption = readOption(scanner);
-
-            switch (selectedOption) {
-                case SHOW_ALL -> showAll(toolkitController);
-                case FIND_TOOL -> findTool();
-                case ADD_TOOL -> addTool();
-                case EXIT -> isRunning = false;
+            if(scanner.hasNextInt()){
+                int selectedOption = readOption(scanner);
+                switch (selectedOption) {
+                    case SHOW_ALL -> showAll(toolkitController);
+                    case FIND_TOOL -> findTool();
+                    case ADD_TOOL -> addTool();
+                    case EXIT -> isRunning = false;
+                }
+            }else{
+                System.out.println("This is not a number ;)");
+                scanner.nextLine();
             }
         }
     }
