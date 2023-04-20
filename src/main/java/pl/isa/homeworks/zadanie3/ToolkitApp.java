@@ -23,7 +23,7 @@ public class ToolkitApp {
                 switch (selectedOption) {
                     case SHOW_ALL -> showAll(toolkitController);
                     case FIND_TOOL -> findTool(toolkitController);
-                    case ADD_TOOL -> addTool();
+                    case ADD_TOOL -> addTool(toolkitController);
                     case EXIT -> isRunning = false;
                 }
             }else{
@@ -82,7 +82,16 @@ public class ToolkitApp {
         return tool -> tool.getName().equalsIgnoreCase(toolName);
     }
 
-    private static void addTool() {
-        System.out.println("Sorry, I don't know how to add tools yet...");
+    private static void addTool(ToolkitController toolkitController) {
+        System.out.println("Tool name:");
+        String name = scanner.nextLine();
+        System.out.println("Tool size:");
+        float size = scanner.nextFloat();
+        scanner.nextLine();
+        System.out.println("Set unit:");
+        String unit = scanner.nextLine();
+        Tool.ToolSize toolSize = new Tool.ToolSize(size, unit);
+        Tool tool = new Tool(name,toolSize);
+        toolkitController.add(tool);
     }
 }

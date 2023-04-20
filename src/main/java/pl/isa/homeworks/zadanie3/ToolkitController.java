@@ -10,10 +10,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class ToolkitController {
-    private final List<Tool> tools;
-
+    private List<Tool> tools;
+    Path pathToFile = Path.of("src", "main","resources", "toolkit.json");
     public ToolkitController() {
         tools = readToolkit();
+    }
+
+    public void setTools(List<Tool> tools) {
+        this.tools = tools;
     }
 
     public List<Tool> getTools() {
@@ -25,10 +29,12 @@ public class ToolkitController {
     }
 
     public boolean add(Tool tool) {
-        tools.add(tool);
+        List<Tool> newToolsList = new ArrayList<>(tools);
+        newToolsList.add(tool);
+        setTools(newToolsList);
         return saveToolkit();
     }
-    Path pathToFile = Path.of("src", "main","resources", "toolkit.json");
+
     private List<Tool> readToolkit() {
         try {
             byte[] jsonData = Files.readAllBytes(Paths.get(String.valueOf(pathToFile)));
@@ -41,12 +47,21 @@ public class ToolkitController {
     }
 
     private boolean saveToolkit() {
-        ObjectMapper mapper = new ObjectMapper();
-        List<Tool> toolsList = getTools();
+//        ObjectMapper mapper = new ObjectMapper();
+//        List<Tool> toolsList =
+//        try {
+//            mapper.writeValue(pathToFile.toFile(), toolsList);
+//            return true;
+//        } catch (IOException e) {
+//            return false;
+//        }
+
         try {
-            mapper.writeValue(pathToFile.toFile(), toolsList);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(pathToFile.toFile(), tools); // Zapisanie listy narzędzi do pliku JSON
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }
