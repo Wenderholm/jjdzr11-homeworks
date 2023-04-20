@@ -1,8 +1,11 @@
 package pl.isa.homeworks.zadanie3;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class ToolkitApp {
+    private static final Scanner scanner = new Scanner(System.in);
     private static final int SHOW_ALL = 1;
     private static final int FIND_TOOL = 2;
     private static final int ADD_TOOL = 3;
@@ -18,7 +21,7 @@ public class ToolkitApp {
                 int selectedOption = readOption(scanner);
                 switch (selectedOption) {
                     case SHOW_ALL -> showAll(toolkitController);
-                    case FIND_TOOL -> findTool();
+                    case FIND_TOOL -> findTool(toolkitController);
                     case ADD_TOOL -> addTool();
                     case EXIT -> isRunning = false;
                 }
@@ -56,8 +59,27 @@ public class ToolkitApp {
                 + "\nSize: " + tool.getToolSize().size() + " " + tool.getToolSize().unit());
     }
 
-    private static void findTool() {
-        System.out.println("Sorry, I don't know how to find tools yet...");
+    private static void findTool(ToolkitController toolkitController) {
+        System.out.println("What kind of tool do you want to check: ");
+        scanner.nextLine();
+        String toolToFindByName = scanner.nextLine().toLowerCase();
+        List<Tool> tools = toolkitController.getTools();
+        boolean findTool = false;
+        for (Tool tool : tools) {
+            if (foundToolByName(toolToFindByName).test(tool)) {
+                System.out.println("We heave that tool");
+                findTool = true;
+                break;
+            }
+        }
+        if (!findTool) {
+            System.out.println("We don't have that tool");
+        }
+    }
+
+
+    private static Predicate<Tool> foundToolByName(String toolName) {
+        return tool -> tool.getName().equalsIgnoreCase(toolName);
     }
 
     private static void addTool() {
