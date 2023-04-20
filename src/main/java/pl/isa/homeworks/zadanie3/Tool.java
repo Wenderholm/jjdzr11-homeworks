@@ -4,6 +4,8 @@ public class Tool {
     private String name;
     private ToolSize toolSize;
 
+    public Tool() {
+    }
     public Tool(String name, ToolSize size) {
         this.name = name;
         this.toolSize = size;
