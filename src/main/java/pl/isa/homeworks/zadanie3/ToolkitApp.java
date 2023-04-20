@@ -17,6 +17,7 @@ public class ToolkitApp {
 
         boolean isRunning = true;
         while (isRunning) {
+            showOptions();
             if(scanner.hasNextInt()){
                 int selectedOption = readOption(scanner);
                 switch (selectedOption) {
@@ -61,7 +62,6 @@ public class ToolkitApp {
 
     private static void findTool(ToolkitController toolkitController) {
         System.out.println("What kind of tool do you want to check: ");
-        scanner.nextLine();
         String toolToFindByName = scanner.nextLine().toLowerCase();
         List<Tool> tools = toolkitController.getTools();
         boolean findTool = false;
