@@ -47,18 +47,9 @@ public class ToolkitController {
     }
 
     private boolean saveToolkit() {
-//        ObjectMapper mapper = new ObjectMapper();
-//        List<Tool> toolsList =
-//        try {
-//            mapper.writeValue(pathToFile.toFile(), toolsList);
-//            return true;
-//        } catch (IOException e) {
-//            return false;
-//        }
-
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(pathToFile.toFile(), tools); // Zapisanie listy narzędzi do pliku JSON
+            mapper.writeValue(pathToFile.toFile(), tools);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
