@@ -85,13 +85,28 @@ public class ToolkitApp {
     private static void addTool(ToolkitController toolkitController) {
         System.out.println("Tool name:");
         String name = scanner.nextLine();
-        System.out.println("Tool size:");
-        float size = scanner.nextFloat();
-        scanner.nextLine();
+        float checkedSize = checkIsFloat();
         System.out.println("Set unit:");
         String unit = scanner.nextLine();
-        Tool.ToolSize toolSize = new Tool.ToolSize(size, unit);
+        Tool.ToolSize toolSize = new Tool.ToolSize(checkedSize, unit);
         Tool tool = new Tool(name,toolSize);
         toolkitController.add(tool);
+    }
+
+    private static float checkIsFloat() {
+        boolean isFloat = true;
+        float size = 0;
+        while(isFloat){
+            System.out.println("Tool size:");
+            if(scanner.hasNextFloat()){
+                size = scanner.nextFloat();
+                scanner.nextLine();
+                isFloat = false;
+            }else{
+                System.out.println("This is not a number");
+                scanner.nextLine();
+            }
+        }
+        return size;
     }
 }
