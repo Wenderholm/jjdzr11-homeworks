@@ -2,6 +2,7 @@ package pl.isa.homeworks.zadanie3;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Tool {
     private String name;
@@ -46,5 +47,17 @@ public class Tool {
     }
 
     public record ToolSize(float size, String unit) {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tool tool)) return false;
+        return Objects.equals(name, tool.name) && Objects.equals(toolSize, tool.toolSize);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, toolSize);
     }
 }

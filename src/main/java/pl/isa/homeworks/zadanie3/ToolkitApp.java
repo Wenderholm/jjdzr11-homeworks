@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class ToolkitApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final int SHOW_ALL = 1;
     private static final int FIND_TOOL = 2;
     private static final int ADD_TOOL = 3;
+    private static final int CHECK_TOOLS_NUMBER = 4;
     private static final int EXIT = 0;
 
     public static void main(String[] args) {
@@ -25,6 +27,7 @@ public class ToolkitApp {
                     case SHOW_ALL -> showAll(toolkitController);
                     case FIND_TOOL -> findTool(toolkitController);
                     case ADD_TOOL -> addTool(toolkitController);
+                    case CHECK_TOOLS_NUMBER -> checkNumberOfTools(toolkitController);
                     case EXIT -> isRunning = false;
                 }
             }else{
@@ -39,11 +42,31 @@ public class ToolkitApp {
                 + SHOW_ALL + " - show all tools\n"
                 + FIND_TOOL + " - find tool by name\n"
                 + ADD_TOOL + " - add new tool\n"
+                + CHECK_TOOLS_NUMBER + " - check number of tools\n"
                 + EXIT + " - exit");
     }
 
     private static int readOption(Scanner scanner) {
         return scanner.nextInt();
+    }
+
+    private static void checkNumberOfTools(ToolkitController toolkitController) {
+        System.out.println("Enter the name of the tool");
+        String checkTool = scanner.nextLine();
+        List<Tool> tools = toolkitController.getTools();
+        Stream<Tool> toolStream = tools.stream().filter(tool -> tool.getName().contains(checkTool));
+        System.out.println("Do you want to find " + checkTool + " with a specific size. press Y(yes) or ENTER(no) ");
+        String yesOrNo = scanner.nextLine();
+        if (yesOrNo.equalsIgnoreCase("y")){
+            System.out.println("What kind of tools do you want to count");
+            float checkedSize = checkIsFloat();
+            long count = toolStream.filter(tool -> tool.getToolSize().size() == checkedSize).count();
+            System.out.println("We have " + count + " Tool name: " + checkTool + " with size : " + checkedSize);
+        }else{
+            long count = toolStream.count();
+            System.out.println("We have " + count + " Tool name: " + checkTool);
+        }
+
     }
 
     private static void showAll(ToolkitController toolkitController) {
@@ -99,6 +122,7 @@ public class ToolkitApp {
     private static void addTool(ToolkitController toolkitController) {
         System.out.println("Tool name:");
         String name = scanner.nextLine();
+        System.out.println("Tool size:");
         float checkedSize = checkIsFloat();
         System.out.println("Set unit:");
         String unit = scanner.nextLine();
@@ -131,13 +155,13 @@ public class ToolkitApp {
         boolean isFloat = true;
         float size = 0;
         while(isFloat){
-            System.out.println("Tool size:");
+
             if(scanner.hasNextFloat()){
                 size = scanner.nextFloat();
                 scanner.nextLine();
                 isFloat = false;
             }else{
-                System.out.println("This is not a number");
+                System.out.println("This is not a number. Pleas enter the number");
                 scanner.nextLine();
             }
         }
