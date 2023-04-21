@@ -1,5 +1,6 @@
 package pl.isa.homeworks.zadanie3;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -57,7 +58,20 @@ public class ToolkitApp {
 
     private static void showTool(Tool tool) {
         System.out.println("---\n" + tool.getName()
-                + "\nSize: " + tool.getToolSize().size() + " " + tool.getToolSize().unit());
+                + "\nSize: " + tool.getToolSize().size() + " " + tool.getToolSize().unit()
+                + "\nActivity: " + checkIsActivity(tool));
+    }
+
+    private static String checkIsActivity(Tool tool) {
+        if(!tool.getActivities().isEmpty()){
+            return showToolsActivity(tool);
+        }else {
+            return "no activities added";
+        }
+    }
+
+    private static String showToolsActivity(Tool tool) {
+        return String.join(", ", tool.getActivities());
     }
 
     private static void findTool(ToolkitController toolkitController) {
@@ -88,9 +102,29 @@ public class ToolkitApp {
         float checkedSize = checkIsFloat();
         System.out.println("Set unit:");
         String unit = scanner.nextLine();
+        List<String> activity = addToolActivity();
         Tool.ToolSize toolSize = new Tool.ToolSize(checkedSize, unit);
-        Tool tool = new Tool(name,toolSize);
+        Tool tool = new Tool(name,toolSize,activity);
         toolkitController.add(tool);
+    }
+
+    private static List<String> addToolActivity() {
+        List<String> activityArr = new ArrayList<>();
+        boolean isRunning = true;
+        do{
+            System.out.println("Add tool activity or press 0 to the end adding:");
+            String activityToAdd = scanner.nextLine();
+            if(!activityToAdd.isEmpty() && ((activityToAdd.matches("^[a-zA-Z]+$")) || (activityToAdd.equals("0")))){
+                if(!activityToAdd.equals("0")){
+                    activityArr.add(activityToAdd);
+                }else{
+                    isRunning = false;
+                }
+            }else {
+                System.out.println("Pleas use words");
+            }
+        }while (isRunning);
+        return activityArr;
     }
 
     private static float checkIsFloat() {
