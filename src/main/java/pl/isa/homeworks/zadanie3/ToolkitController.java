@@ -1,13 +1,23 @@
 package pl.isa.homeworks.zadanie3;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ToolkitController {
-    private final List<Tool> tools;
-
+    private List<Tool> tools;
+    Path pathToFile = Path.of("src", "main","resources", "toolkit.json");
     public ToolkitController() {
         tools = readToolkit();
+    }
+
+    public void setTools(List<Tool> tools) {
+        this.tools = tools;
     }
 
     public List<Tool> getTools() {
@@ -15,19 +25,35 @@ public class ToolkitController {
     }
 
     public boolean isEmpty() {
-        return true;
+        return tools.isEmpty();
     }
 
     public boolean add(Tool tool) {
-        tools.add(tool);
+        List<Tool> newToolsList = new ArrayList<>(tools);
+        newToolsList.add(tool);
+        setTools(newToolsList);
         return saveToolkit();
     }
 
     private List<Tool> readToolkit() {
-        return new ArrayList<>();
+        try {
+            byte[] jsonData = Files.readAllBytes(Paths.get(String.valueOf(pathToFile)));
+            ObjectMapper toolsList = new ObjectMapper();
+            return Arrays.asList(toolsList.readValue(jsonData, Tool[].class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     private boolean saveToolkit() {
-        return false;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(pathToFile.toFile(), tools);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
