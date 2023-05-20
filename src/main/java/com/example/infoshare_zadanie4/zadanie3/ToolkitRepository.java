@@ -7,13 +7,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 @Repository
 public class ToolkitRepository {
     private List<Tool> tools;
-    Path pathToFile = Path.of("src", "main","resources", "toolkit.json");
+    Path pathToFile = Path.of("src", "main", "resources", "toolkit.json");
+
     public ToolkitRepository() {
         tools = readToolkit();
     }
@@ -60,14 +64,22 @@ public class ToolkitRepository {
         }
     }
 
-    public void removeByName(String name){
+    public void removeByName(String name) {
         List<Tool> updatedTools = new ArrayList<>(tools);
         updatedTools.removeIf(foundToolByName(name));
         setTools(updatedTools);
-
     }
 
     private static Predicate<Tool> foundToolByName(String name) {
         return tool -> tool.getName().equalsIgnoreCase(name);
+    }
+
+    ToolDto findByName(String name){
+        for (Tool tool : tools) {
+            if (name.equals(tool.getName())) {
+                return new ToolDto(tool.getName(),tool.getToolSize().size(),tool.getToolSize().unit(),tool.getActivities());
+            }
+        }
+        return null;
     }
 }

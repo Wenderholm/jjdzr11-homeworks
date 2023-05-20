@@ -2,12 +2,12 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dodaj nowe narzędzie</title>
+    <title >Zaktualizuj narzędzie</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
 </head>
 <body>
-<h1>Dodaj narzędzie</h1>
-<form action="/save" method="post" th:object="${tool}">
+<h1 th:text="|Zaktualizuj narzędzie ${toolToEdit.name}|">Aktualizacja</h1>
+<form th:action="@{/update/{name}(name=*{name})}" method="post" th:object="${toolToEdit}">
     <label>
         Nazwa narzędzia:
         <input th:field="*{name}"  type="text">
@@ -22,9 +22,8 @@
     </label>
 
     <label>Co można tym zrobić (czynności dodawać po przecinku):</label>
-    <input type="text" name="myList" th:value="${tool.activities}">
-    <br>
-    <button type="submit">Dodaj</button>
+    <input type="text" name="myList" th:value="${toolToEdit.activities}">
+    <button type="submit">AKTUALIZUJ</button>
 </form>
 </body>
 </html>

@@ -39,4 +39,23 @@ public class ToolkitController {
         toolkitRepository.removeByName(name);
         return "redirect:/";
     }
+
+    @GetMapping("/edit/{name}")
+    String editPromotion(@PathVariable("name")String name, Model model){
+        ToolDto toolDto = toolkitRepository.findByName(name);
+        model.addAttribute("toolToEdit",toolDto);
+        return "update-form";
+    }
+
+    @PostMapping("/update/{name}")
+    String updatePromotion(
+            @PathVariable("name")String name,
+            @RequestParam("myList") List<String> myList,
+            @ModelAttribute ToolDto toolDto){
+        toolkitRepository.removeByName(name);
+        Tool.ToolSize toolSize = new Tool.ToolSize(toolDto.getSize(), toolDto.getUnit());
+        Tool tool = new Tool(toolDto.getName(),toolSize,myList);
+        toolkitRepository.add(tool);
+        return "redirect:/";
+    }
 }

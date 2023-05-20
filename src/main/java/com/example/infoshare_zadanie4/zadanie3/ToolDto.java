@@ -24,8 +24,10 @@ public class ToolDto {
     }
 
     public List<String> getActivities() {
+
         return activities;
     }
+
 
     public void setActivities(List<String> activities) {
         this.activities = activities;
