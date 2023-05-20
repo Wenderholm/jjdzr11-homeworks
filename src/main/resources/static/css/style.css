@@ -2,15 +2,23 @@ label {
     display: block;
 }
 table {
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
-    max-width: 1000px;
-    width: 100%;
+    margin: 0 auto;
 }
 
 td {
     border: 1px solid black;
+    text-align: center;
 }
 ul{
     margin: 0;
+}
+p{
+    text-align: center;
+}
+
+.activitiesInfo{
+    text-align: left;
 }
