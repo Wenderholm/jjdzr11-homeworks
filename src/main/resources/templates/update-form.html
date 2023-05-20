@@ -22,7 +22,7 @@
     </label>
 
     <label>Co można tym zrobić (czynności dodawać po przecinku):</label>
-    <input type="text" name="myList" th:value="${toolToEdit.activities}">
+    <input type="text" name="myList" th:value="${#strings.arrayJoin(toolToEdit.activities, ',')}">
     <button type="submit">AKTUALIZUJ</button>
 </form>
 </body>
