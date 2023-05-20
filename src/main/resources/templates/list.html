@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:act="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Promoceny - zbiór najlepszych promocji</title>
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        td {
+            border: 1px solid black;
+        }
+        ul{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<h1>Narzędziownia</h1>
+<a href="/add">Dodaj Narzędzie</a>
+<section th:if="${!tools.isEmpty()}">
+    <p> Poniżej znajduje się lista narzędzi w naszej bazie </p>
+    <table>
+        <thead>
+        <tr>
+            <td>Nazwa</td>
+            <td>Rozmiar</td>
+            <td>Do czego można użyć</td>
+            <!--            <td>Edytuj</td>-->
+            <!--            <td>Usuń</td>-->
+        </tr>
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each="tool:${tools}" th:object="${tool}">
+            <td th:text="*{name}"></td>
+            <td th:text="|*{toolSize.size() + ' ' + toolSize.unit()}|"></td>
+            <td th:if="${tool.activities.isEmpty()} " th:text="|Brak podanych aktywności|"></td>
+            <td th:if="${!tool.activities.isEmpty()}">
+                <ul th:each="act:${tool.activities}" th:object="${act}">
+                    <li th:text="${act}"></li>
+                </ul>
+            </td>
+
+            <!--            <td> <a th:href="@{/edit/{name}(name=*{product})}">Edytuj</a></td>-->
+            <!--&lt;!&ndash; przekazanie nazwy porduktu pod zmienna name do kontrolera &ndash;&gt;-->
+            <!--            <td> <a th:href="@{/delete/{name}(name=*{product})}">Usuń</a></td>-->
+        </tr>
+        </tbody>
+    </table>
+</section>
+<h2 th:if="${tools.isEmpty()}">Nie posiadamy żadnego narzędzia w naszej bazie</h2>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj nowe narzędzie</title>
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<h1>Dodaj narzędzie</h1>
+<form action="/save" method="post" th:object="${tool}">
+    <label>
+        Nazwa narzędzia:
+        <input th:field="*{name}" name="product" type="text">
+    </label>
+    <label>
+        Waga:
+        <input th:field="*{size}" type="number">
+    </label>
+    <label>
+        Jednostka:
+        <input th:field="*{unit}" type="text">
+    </label>
+
+    <label>Co można tym zrobić (czynności dodawać po przecinku):</label>
+    <input type="text" name="myList" th:value="${tool.activities}">
+    <br>
+    <button type="submit">Dodaj</button>
+</form>
+</body>
+</html>
