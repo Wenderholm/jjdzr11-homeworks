@@ -7,10 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
+
 @Repository
 public class ToolkitRepository {
     private List<Tool> tools;
@@ -59,5 +58,16 @@ public class ToolkitRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void removeByName(String name){
+        List<Tool> updatedTools = new ArrayList<>(tools);
+        updatedTools.removeIf(foundToolByName(name));
+        setTools(updatedTools);
+
+    }
+
+    private static Predicate<Tool> foundToolByName(String name) {
+        return tool -> tool.getName().equalsIgnoreCase(name);
     }
 }

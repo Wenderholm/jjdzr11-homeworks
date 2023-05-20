@@ -2,10 +2,7 @@ package com.example.infoshare_zadanie4.zadanie3;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,11 @@ public class ToolkitController {
         Tool.ToolSize toolSize = new Tool.ToolSize(toolDto.getSize(), toolDto.getUnit());
         Tool tool = new Tool(toolDto.getName(),toolSize,myList);
         toolkitRepository.add(tool);
+        return "redirect:/";
+    }
+    @GetMapping("/delete/{name}")
+    String deletePromotion(@PathVariable("name")String name){
+        toolkitRepository.removeByName(name);
         return "redirect:/";
     }
 }

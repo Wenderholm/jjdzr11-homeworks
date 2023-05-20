@@ -16,8 +16,8 @@
             <td>Nazwa</td>
             <td>Rozmiar</td>
             <td>Do czego można użyć</td>
-            <!--            <td>Edytuj</td>-->
-            <!--            <td>Usuń</td>-->
+<!--            <td>Edytuj</td>-->
+            <td>Usuń</td>
         </tr>
         </thead>
         <tbody>
@@ -30,10 +30,9 @@
                     <li th:text="${act}"></li>
                 </ul>
             </td>
-
-            <!--            <td> <a th:href="@{/edit/{name}(name=*{product})}">Edytuj</a></td>-->
-            <!--&lt;!&ndash; przekazanie nazwy porduktu pod zmienna name do kontrolera &ndash;&gt;-->
-            <!--            <td> <a th:href="@{/delete/{name}(name=*{product})}">Usuń</a></td>-->
+<!---->
+<!--            <td><a th:href="@{/edit/{name}(name=*{product})}">Edytuj</a></td>-->
+            <td><a th:href="@{/delete/{name}(name=*{name})}">Usuń</a></td>
         </tr>
         </tbody>
     </table>
