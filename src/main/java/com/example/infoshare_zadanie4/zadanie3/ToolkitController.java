@@ -35,7 +35,6 @@ public class ToolkitController {
         Tool.ToolSize toolSize = new Tool.ToolSize(toolDto.getSize(), toolDto.getUnit());
         Tool tool = new Tool(toolDto.getName(),toolSize,myList);
         toolkitRepository.add(tool);
-
         return "redirect:/";
     }
 }

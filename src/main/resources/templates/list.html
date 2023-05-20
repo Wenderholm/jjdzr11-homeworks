@@ -2,22 +2,8 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:act="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Promoceny - zbiór najlepszych promocji</title>
-    <style>
-        table {
-            border: 1px solid black;
-            border-collapse: collapse;
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        td {
-            border: 1px solid black;
-        }
-        ul{
-            margin: 0;
-        }
-    </style>
+    <title>Narzędziownia</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
 </head>
 <body>
 <h1>Narzędziownia</h1>
@@ -35,9 +21,6 @@
         </tr>
         </thead>
         <tbody>
-
-
-
         <tr th:each="tool:${tools}" th:object="${tool}">
             <td th:text="*{name}"></td>
             <td th:text="|*{toolSize.size() + ' ' + toolSize.unit()}|"></td>
