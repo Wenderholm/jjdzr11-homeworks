@@ -9,6 +9,8 @@ import java.util.List;
 @Controller
 public class ToolkitController {
     private final ToolkitRepository toolkitRepository;
+    List<Tool> toolListByName;
+    public String searchName;
 
     public ToolkitController(ToolkitRepository toolkitRepository) {
         this.toolkitRepository = toolkitRepository;
@@ -58,4 +60,24 @@ public class ToolkitController {
         toolkitRepository.add(tool);
         return "redirect:/";
     }
+
+    @GetMapping("/search")
+    String search(Model model, ToolDto toolDto){
+        model.addAttribute("tool", toolDto);
+        return "searchForm";
+    }
+
+    @PostMapping("/filterByName")
+    String showByAuthor(@ModelAttribute("tool") ToolDto toolDto){
+        toolListByName = toolkitRepository.filterByTool(toolDto.getName());
+        searchName = toolDto.getName();
+        return "redirect:filterTool";
+    }
+    @GetMapping("/filterTool")
+    String bookAuthList(Model model){
+        model.addAttribute("toolA", toolListByName);
+        model.addAttribute("searchName", searchName);
+        return "toolByName";
+    }
+
 }

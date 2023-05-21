@@ -6,11 +6,14 @@
     <div class="card mt-5" style="width: 90%; margin: 0 auto;">
         <div class="card-top text-center p-3">
             <h3 class="card-title">Narzędziownia</h3>
-            <a class="btn btn-secondary" href="/add" role="button">DODAJ NARZĘDZIE</a>
-            <a class="btn btn-secondary me-2" th:href="@{/search}">WYSZUKAJ NARZĘDZIE</a>
         </div>
-        <section th:if="${!tools.isEmpty()}">
-            <p> Poniżej znajduje się lista narzędzi w naszej bazie </p>
+        <section th:if="${toolA.isEmpty()}">
+            <h3 th:text="|Brak narzędzia o nazwie: ${searchName}|"></h3>
+            <a class="btn btn-secondary me-2" th:href="@{/}">WRÓĆ</a>
+        </section>
+        <section th:if="${!toolA.isEmpty()}">
+
+            <p> List </p>
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -22,10 +25,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="tool:${tools}" th:object="${tool}">
+                <tr th:each="tool:${toolA}" th:object="${tool}">
                     <td th:text="*{name}"></td>
                     <td th:text="|*{toolSize.size() + ' ' + toolSize.unit()}|"></td>
-                    <td class="activitiesInfo" th:if="${tool.activities.isEmpty()} " th:text="|Brak podanych aktywności|"></td>
+                    <td class="activitiesInfo" th:if="${tool.activities.isEmpty()} "
+                        th:text="|Brak podanych aktywności|"></td>
                     <td class="activitiesInfo" th:if="${!tool.activities.isEmpty()}">
                         <ul th:each="act:${tool.activities}" th:object="${act}">
                             <li th:text="${act}"></li>
@@ -37,8 +41,9 @@
                 </tr>
                 </tbody>
             </table>
+            <a class="btn btn-secondary me-2" th:href="@{/}">WRÓĆ</a>
         </section>
-        <h2 th:if="${tools.isEmpty()}">Nie posiadamy żadnego narzędzia w naszej bazie</h2>
+
     </div>
 </div>
 </body>

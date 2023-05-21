@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments::head}"></head>
+<body>
+<div class="container">
+    <div class="card-top text-center p-3">
+        <h3 class="card-title">WPISZ NAZWĘ SZUKANEGO NARZĘDZIA</h3>
+
+        <form th:action="@{/filterByName}" method="post" th:object="${tool}" class="mb-5">
+            <input th:field="*{name}" type="text" name="text">
+            <br>
+            <button type="submit" class="btn btn-warning">SZUKAJ</button>
+            <a class="btn btn-secondary me-2" th:href="@{/}">WRÓĆ</a>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

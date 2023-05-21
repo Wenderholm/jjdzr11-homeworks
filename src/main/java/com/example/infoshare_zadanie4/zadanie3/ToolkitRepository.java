@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Repository
 public class ToolkitRepository {
@@ -82,4 +80,17 @@ public class ToolkitRepository {
         }
         return null;
     }
+
+    public List<Tool> filterByTool(String name) {
+        List<Tool> searchTool;
+        Set<String> toolNameList = tools.stream().map(tool -> tool.getName().toLowerCase()).collect(Collectors.toSet());
+        String searchName = name.toLowerCase();
+        if (toolNameList.contains(searchName)) {
+            searchTool = tools.stream().filter(tool -> tool.getName().equalsIgnoreCase(searchName)).toList();
+        } else {
+            searchTool = Collections.emptyList();
+        }
+        return searchTool;
+    }
+
 }
